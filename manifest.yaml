@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-md-portal
+  namespace: argocd
+  labels:
+    app: frontend-md-portal
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      name: frontend-md-portal-ports
+  selector:
+    app: frontend-md-portal
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: argocd
+  labels:
+    app: frontend-md-portal
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-md-portal
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend-md-portal
+        tier: frontend
+    spec: # Pod spec
+      containers:
+        - name: frontend-container
+          image: condorl/md-portal-ms:2.0
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"    # 500milliCPUs (1/2 CPU)
+            limits:
+              memory: "250Mi"
+              cpu: "400m"
