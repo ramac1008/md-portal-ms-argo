@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-md-portal
+  name: frontend-md-portal-ms
   namespace: argocd
   labels:
-    app: frontend-md-portal
+    app: frontend-md-portal-ms
 spec:
   ports:
     - port: 80
       protocol: TCP
-      name: frontend-md-portal-ports
+      name: frontend-md-portal-ms-ports
   selector:
-    app: frontend-md-portal
+    app: frontend-md-portal-ms
     tier: frontend
   type: LoadBalancer
 ---
@@ -21,17 +21,17 @@ metadata:
   name: frontend-deployment
   namespace: argocd
   labels:
-    app: frontend-md-portal
+    app: frontend-md-portal-ms
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend-md-portal
+      app: frontend-md-portal-ms
       tier: frontend
   template:
     metadata:
       labels:
-        app: frontend-md-portal
+        app: frontend-md-portal-ms
         tier: frontend
     spec: # Pod spec
       containers:
