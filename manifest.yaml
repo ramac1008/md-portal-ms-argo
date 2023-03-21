@@ -36,7 +36,7 @@ spec:
     spec: # Pod spec
       containers:
         - name: frontend-container
-          image: condorl/md-portal-ms:2.0
+          image: condorl/md-portal-sgt2-ng:1.0
           ports:
             - containerPort: 3000
           resources:
